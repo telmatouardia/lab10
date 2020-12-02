@@ -1,0 +1,92 @@
+1) copier les fichier max, min  et var dans ce lab (.h ET .c) 
+
+2) créer un makefile: 
+install: My_binaire
+        sudo mv  My_binaire Home/Documents 
+
+My_binaire: min.o max.o var.o TEST.o
+        gcc -Wall min.o max.o var.o TEST.o -o My_binaire
+
+max.o: max.c max.h
+        gcc -Wall -c max.c 
+
+min.o: min.c min.h
+        gcc -Wall -c min.c
+
+var.o: var.o var.h
+        gcc -Wall -c var.c 
+
+test.o: TEST.c
+        gcc -Wall -c TEST.c
+
+clean: 
+        rm -f * .o
+
+3) Faire des differentes compilations: 
+
+make max.o
+make: 'max.o' is up to date.
+
+make TEST.o
+make install
+make min.o
+
+4) CC=gcc
+   OBJ=max.o min.o var.O
+   CC_OPTIONS=
+
+5) CC_OPTIONS=-g -Wall
+verifier: make CC_OPTIONS=-g -Wall
+
+6) 
+CC=gcc
+SRC= $(wildcard *.c)
+OBJ= $(SRC:.C=o )
+
+all: My_binaire
+
+%.o: %.c
+        $(CC) -Wall -o $@ -c $< 
+
+$ my_binaire: $(OBJ)
+        $(CC) -o $@ $^ 
+
+clean:
+        rm -rf * .o
+
+
+7) & 8)
+
+CC=gcc
+SRC= $(wildcard *.c)
+OBJ= $(SRC:.C=o )
+DEBUG= yes
+ifeq ($(DEBUG),yes)
+        rep= -g -W -Wall
+
+else
+        rep=
+
+endif
+
+all: My_binaire
+
+%.o: %.c
+        $(CC) -Wall -o $@ -c $< 
+
+$ my_binaire: $(OBJ)
+        $(CC) -o $@ $^ 
+
+clean:
+        rm -rf * .o
+
+
+9)
+
+ifeq ($(DEBUG),yes)
+        @echo "Génération en mode debug"
+else
+        @echo "Génération en mode Release"
+endif
+
+
